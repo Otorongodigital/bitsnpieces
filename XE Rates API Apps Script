@@ -1,5 +1,5 @@
 function writeRatesToSheet() {
-  const sheetName = "2022 USD PER UNIT";
+  const sheetName = "2022 USD PER UNIT"; // Set Sheet Name to write to
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(sheetName);
 
@@ -10,8 +10,8 @@ function writeRatesToSheet() {
 
   Logger.log("Starting to write rates to the sheet...");
 
-  const targetCurrency = "USD";
-  const baseCurrencies = [
+  const targetCurrency = "USD"; // Currency converting to
+  const baseCurrencies = [ // Currency converting from
     "AUD", "CAD", "CNY", "EUR", "FJD", "GBP", "HKD",
     "IDR", "INR", "JPY", "MXN", "NZD", "PHP",
     "PLN", "SGD", "THB", "ZAR"
@@ -22,12 +22,12 @@ function writeRatesToSheet() {
     sheet.getRange(i + 2, 1).setValue(baseCurrencies[i]);
   }
 
-  // Adjust the start date to 01/02/2021 and end date to 28/02/2021 for February
+  // Set Start Date & End Date for rates per day
   const startDate = new Date("2022-09-01");
   const endDate = new Date("2022-09-30");
 
-  let currentColumn = 245; // Start writing rates from the thirty-third column (Column AG)
-  const time = "13:00";
+  let currentColumn = 2; // Start writing rates from the thirty-third column (Column AG)
+  const time = "13:00"; // Set time to pull the Mid Market Rate
   const username = 'XXX';
   const password = 'XXX';
   const authString = Utilities.base64Encode(username + ':' + password);
@@ -40,7 +40,7 @@ function writeRatesToSheet() {
 
     Logger.log(`Processing rates for date: ${displayDate}`);
 
-    // Set the date in the first row of the current column
+    // Sets the date in the first row of the current column
     sheet.getRange(1, currentColumn).setValue(displayDate);
     let rateData = [];
 
@@ -76,10 +76,10 @@ function writeRatesToSheet() {
       }
     }
 
-    // Write the collected rates for the current day into the sheet starting from the thirty-third column (Column AG)
+    // Write the collected rates for the current day into the sheet
     sheet.getRange(2, currentColumn, rateData.length, 1).setValues(rateData.map(r => [r]));
     currentColumn++;
-    Utilities.sleep(100); // Sleep for 0.1 second (100 milliseconds)
+    Utilities.sleep(100); // Sleep for 0.1 second (100 milliseconds) to circumvent rate limits on XE API
   }
 
   Logger.log(`Completed writing rates. Processed ${endDate.getDate() - startDate.getDate() + 1} days with ${errorCount} errors.`);
