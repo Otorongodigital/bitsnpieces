@@ -28,8 +28,8 @@ function ondemandwriteRatesToSheet() {
 
   let currentColumn = 123; // Start writing rates from the thirty-third column (Column AG)
   const time = "12:00"; //SET THIS TO 12:00 for DAYLIGHT SAVINGS TIME or 13:00 for NON DAYLIGHT SAVINGS - AEST
-  const username = 'wickedweaselbikinis219421929';
-  const password = 'h0bukd04vvjdd6tbkvgmidte6t';
+  const username = 'XXX';
+  const password = 'XXX';
   const authString = Utilities.base64Encode(username + ':' + password);
 
   let errorCount = 0;
